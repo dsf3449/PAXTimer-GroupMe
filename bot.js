@@ -21,6 +21,7 @@ function respond() {
 var endD = new Date("Fri Sep 1 2017 16:00:00 GMT+0000").getTime();
 var departureDate = new Date("Mon Sep 4 2017 18:35:00 GMT+0000").getTime();
 var paxEndDate = new Date("Mon Sep 4 2017 07:00:00 GMT+0000").getTime();
+var firstDepartureDate = new Date("Fri Sep 1 2017 0:20:00 GMT+0000").getTime();
 
 function currentTime() {
     var test = new Date().getTime();
@@ -30,10 +31,15 @@ function currentTime() {
 function calc(incoming, incoming2) {
     var d = currentTime();
     var distance = incoming - d;
+	var distance2 = firstDepartureDate - d;
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+    var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
     if (incoming2 == 1) {
         var type = "PAX West 2017.";
     } else if (incoming2 == 2) {
@@ -42,9 +48,14 @@ function calc(incoming, incoming2) {
         var type = "PAX is over.";
     }
     if (days > 1) {
-        return "There are " + days + " days until " + type;
+        return "There are " + days + " days, " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type + "\n\nAdditionally, time to estimated departure: " + days2 + "d " + hours2 + "h " + minutes2 + "m " + seconds2 + "s";
     } else if (days == 1) {
-        return "There is " + days + " day until " + type;
+		if (firstDepartureDate - currentTime() > 0) {
+			return "There is " + days + " day, " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type + "\n\nAdditionally, time to estimated departure: " + days2 + "d " + hours2 + "h " + minutes2 + "m " + seconds2 + "s";
+		}
+		else {
+			return "There is " + days + " day, " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type;
+		}
     } else if (days == 0) {
         if (days == 0 && hours == 0 && minutes == 0) {
             return "There are " + seconds + " seconds until " + type;
@@ -52,7 +63,12 @@ function calc(incoming, incoming2) {
         if (days == 0 && hours == 0) {
             return "There are " + minutes + " minutes and " + seconds + " seconds until " + type;
         }
-        return "There are " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type;
+		if (firstDepartureDate - currentTime() > 0) {
+			return "There are " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type + "\n\nAdditionally, time to estimated departure: " + days2 + "d " + hours2 + "h " + minutes2 + "m " + seconds2 + "s";
+		}
+		else {
+			return "There are " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until " + type;
+		}
     }
 }
 
