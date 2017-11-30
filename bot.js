@@ -18,10 +18,10 @@ function respond() {
     }
 }
 
-var endD = new Date("Fri Sep 1 2017 16:00:00 GMT+0000").getTime();
-var departureDate = new Date("Mon Sep 4 2017 18:35:00 GMT+0000").getTime();
-var paxEndDate = new Date("Mon Sep 4 2017 07:00:00 GMT+0000").getTime();
-var firstDepartureDate = new Date("Fri Sep 1 2017 0:20:00 GMT+0000").getTime();
+var endD = new Date("Fri Jan 12 2018 16:00:00 GMT+0000").getTime();
+//var departureDate = new Date("Mon Sep 4 2018 18:35:00 GMT+0000").getTime();
+var paxEndDate = new Date("Sun Jan 14 2018 23:30:00 GMT+0000").getTime();
+var firstDepartureDate = new Date("Thu Jan 11 2018 21:00:00 GMT+0000").getTime();
 
 function currentTime() {
     var test = new Date().getTime();
@@ -41,7 +41,7 @@ function calc(incoming, incoming2) {
     var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
     var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
     if (incoming2 == 1) {
-        var type = "PAX West 2017.";
+        var type = "PAX South 2018.";
     } else if (incoming2 == 2) {
         var type = "estimated departure.";
     } else if (incoming2 == 3) {
@@ -78,9 +78,9 @@ function postMessage() {
     if (endD - currentTime() > 0) {
         botResponse = calc(endD, 1);
     } else if (departureDate - currentTime() < 0) {
-        botResponse = "PAX West 2017 is now over.";
+        botResponse = "PAX South 2018 is now over.";
     } else if (paxEndDate - currentTime() < 0) {
-        botResponse = "PAX West 2017 is now over.\n" + calc(departureDate, 2);
+        botResponse = "PAX South 2018 is now over.\n"/* + calc(departureDate, 2)*/;
     } else if (endD - currentTime() < 0) {
         botResponse = "Dude, PAX is going on right now.  Stop talking to a bot and go do something cool.\n(Error 1: PAX is in progress!)\n" + calc(paxEndDate, 3);
     }
